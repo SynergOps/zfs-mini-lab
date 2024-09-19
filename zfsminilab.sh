@@ -52,8 +52,8 @@ create_pool() {
     local disks=($3)
     local spare_disk=$4
     # Check if either ZFS pool already exists
-    if sudo zpool list | grep -qE "zfsmini_mirror|myzfspool_raidz"; then
-        existing_pool=$(sudo zpool list -H -o name 2>/dev/null | grep -E "zfsmini_mirror|myzfspool_raidz" | head -n1)
+    if sudo zpool list | grep -qE "zfsmini_mirror|zfsmini_raidz"; then
+        existing_pool=$(sudo zpool list -H -o name 2>/dev/null | grep -E "zfsmini_mirror|zfsmini_raidz" | head -n1)
         printf "________________________________________________________________\n"
         printf "Error: A ZFS pool (%s) already exists.\n" "$existing_pool"
         printf "Please destroy the %s pool before creating a new one.\n" "$existing_pool"
@@ -109,7 +109,7 @@ destroy_and_cleanup() {
 # Main menu function
 main_menu() {
     # Update existing_pool at the start of each menu display
-    existing_pool=$(sudo zpool list -H -o name 2>/dev/null | grep -E "zfsmini_mi|myzfspool_raidz" | head -n1)
+    existing_pool=$(sudo zpool list -H -o name 2>/dev/null | grep -E "zfsmini_mi|zfsmini_raidz" | head -n1)
     printf "########################################################\n"
     printf "Welcome to the ZFS Playground!\n"
     printf "########################################################\n"
@@ -132,7 +132,7 @@ main_menu() {
             # Clean up previous devices, then create RAIDZ with spare
             disks=($(create_image_files 3 1))  # Create 3 disks starting at index 1
             spare=$(create_image_files 1 4)    # Create 1 spare starting at index 4
-            create_pool "raidz" "myzfspool_raidz" "${disks[*]}" "$spare"
+            create_pool "raidz" "zfsmini_raidz" "${disks[*]}" "$spare"
             sleep 2
             ;;
         3)
