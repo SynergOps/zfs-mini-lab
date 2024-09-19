@@ -17,11 +17,12 @@ cleanup_devices() {
     img_files=("/mnt/disk"*.img)
     if [[ -e "${img_files[0]}" ]]; then
         for file in "${img_files[@]}"; do
-            # Force clear ZFS label if present
-            sudo zpool labelclear -f "$file" || echo "Failed to clear label for $file"
+            # Force clear ZFS label if present, suppress error output
+            sudo zpool labelclear -f "$file" 2>/dev/null || true
             sudo rm -f "$file"
             echo "Deleted $file"
         done
+
     else
         echo "No image files found to delete."
     fi
@@ -49,9 +50,13 @@ create_pool() {
     local spare_disk=$4
     # Check if either ZFS pool already exists
     if sudo zpool list | grep -qE "myzfspool_mirror|myzfspool_raidz"; then
-        echo "Error: A ZFS pool (myzfspool_mirror or myzfspool_raidz) already exists."
-        echo "Please destroy the existing pool before creating a new one."
+        existing_pool=$(sudo zpool list -H -o name 2>/dev/null | grep -E "myzfspool_mirror|myzfspool_raidz" | head -n1)
+        echo "________________________________________________________________ "
+        echo "Error: A ZFS pool ($existing_pool) already exists."
+        echo "Please destroy the $existing_pool pool before creating a new one."
         echo "You can use option 3 from the main menu to destroy and clean up."
+        echo "________________________________________________________________ "
+        sleep 2
         return 1
     fi
 
@@ -94,7 +99,8 @@ destroy_and_cleanup() {
 
     # Clean up image files and ZFS labels
     cleanup_devices
-    echo "Cleanup completed."
+    printf "Cleanup completed.\n"
+    sleep 2
 }
 
 # Main menu function
@@ -117,12 +123,14 @@ main_menu() {
             disks=($(create_image_files 2 1))  # Create 2 disks starting at index 1
             spare=$(create_image_files 1 3)    # Create 1 spare starting at index 3
             create_pool "mirror" "myzfspool_mirror" "${disks[*]}" "$spare"
+            sleep 2
             ;;
         2)
             # Clean up previous devices, then create RAIDZ with spare
             disks=($(create_image_files 3 1))  # Create 3 disks starting at index 1
             spare=$(create_image_files 1 4)    # Create 1 spare starting at index 4
             create_pool "raidz" "myzfspool_raidz" "${disks[*]}" "$spare"
+            sleep 2
             ;;
         3)
             if [ -z "$existing_pool" ]; then
@@ -138,10 +146,12 @@ main_menu() {
             ;;
         4)
             echo "Exiting."
+            sleep 2
             exit 0
             ;;
         *)
             echo "Invalid option. Please try again."
+            sleep 2
             ;;
     esac
 }
