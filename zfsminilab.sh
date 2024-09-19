@@ -20,11 +20,11 @@ cleanup_devices() {
             # Force clear ZFS label if present, suppress error output
             sudo zpool labelclear -f "$file" 2>/dev/null || true
             sudo rm -f "$file"
-            echo "Deleted $file"
+            printf "Deleted %s\n" "$file"
         done
 
     else
-        echo "No image files found to delete."
+        printf "No image files found to delete.\n"
     fi
 }
 
@@ -51,11 +51,11 @@ create_pool() {
     # Check if either ZFS pool already exists
     if sudo zpool list | grep -qE "myzfspool_mirror|myzfspool_raidz"; then
         existing_pool=$(sudo zpool list -H -o name 2>/dev/null | grep -E "myzfspool_mirror|myzfspool_raidz" | head -n1)
-        echo "________________________________________________________________ "
-        echo "Error: A ZFS pool ($existing_pool) already exists."
-        echo "Please destroy the $existing_pool pool before creating a new one."
-        echo "You can use option 3 from the main menu to destroy and clean up."
-        echo "________________________________________________________________ "
+        printf "________________________________________________________________\n"
+        printf "Error: A ZFS pool (%s) already exists.\n" "$existing_pool"
+        printf "Please destroy the %s pool before creating a new one.\n" "$existing_pool"
+        printf "You can use option 3 from the main menu to destroy and clean up.\n"
+        printf "________________________________________________________________\n"
         sleep 2
         return 1
     fi
@@ -107,15 +107,15 @@ destroy_and_cleanup() {
 main_menu() {
     # Update existing_pool at the start of each menu display
     existing_pool=$(sudo zpool list -H -o name 2>/dev/null | grep -E "myzfspool_mirror|myzfspool_raidz" | head -n1)
-    echo "########################################################"
-    echo "Welcome to the ZFS Playground!"
-    echo "########################################################"
-    echo "Select an option:"
-    echo "1) Create a mirror with 2 disk image files and 1 spare"
-    echo "2) Create a RAIDZ with 3 disk image files and 1 spare"
-    echo "3) Destroy and clean up (Current lab pool: $existing_pool)"
-    echo "4) Exit"
-    echo "########################################################"
+    printf "########################################################\n"
+    printf "Welcome to the ZFS Playground!\n"
+    printf "########################################################\n"
+    printf "Select an option:\n"
+    printf "1) Create a mirror with 2 disk image files and 1 spare\n"
+    printf "2) Create a RAIDZ with 3 disk image files and 1 spare\n"
+    printf "3) Destroy and clean up (Current lab pool: %s)\n" "$existing_pool"
+    printf "4) Exit\n"
+    printf "########################################################\n"
     read -rp "Enter your choice: " choice
     case $choice in
         1)
