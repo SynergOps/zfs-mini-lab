@@ -52,8 +52,8 @@ create_pool() {
     local disks=($3)
     local spare_disk=$4
     # Check if either ZFS pool already exists
-    if sudo zpool list | grep -qE "myzfspool_mirror|myzfspool_raidz"; then
-        existing_pool=$(sudo zpool list -H -o name 2>/dev/null | grep -E "myzfspool_mirror|myzfspool_raidz" | head -n1)
+    if sudo zpool list | grep -qE "zfsmini_mirror|myzfspool_raidz"; then
+        existing_pool=$(sudo zpool list -H -o name 2>/dev/null | grep -E "zfsmini_mirror|myzfspool_raidz" | head -n1)
         printf "________________________________________________________________\n"
         printf "Error: A ZFS pool (%s) already exists.\n" "$existing_pool"
         printf "Please destroy the %s pool before creating a new one.\n" "$existing_pool"
@@ -69,7 +69,7 @@ create_pool() {
 
     # Check for successful pool creation before setting properties
     if [[ $? -eq 0 ]]; then
-        # Set compression on the root dataset of the pool (e.g., myzfspool_mirror)
+        # Set compression on the root dataset of the pool (e.g., zfsmini_mi)
         if sudo zfs get all | grep -q 'compression=zstd'; then
             sudo zfs set compression=zstd "$pool_name"
         else
@@ -109,7 +109,7 @@ destroy_and_cleanup() {
 # Main menu function
 main_menu() {
     # Update existing_pool at the start of each menu display
-    existing_pool=$(sudo zpool list -H -o name 2>/dev/null | grep -E "myzfspool_mirror|myzfspool_raidz" | head -n1)
+    existing_pool=$(sudo zpool list -H -o name 2>/dev/null | grep -E "zfsmini_mi|myzfspool_raidz" | head -n1)
     printf "########################################################\n"
     printf "Welcome to the ZFS Playground!\n"
     printf "########################################################\n"
@@ -125,7 +125,7 @@ main_menu() {
             # Clean up previous devices, then create mirror with spare
             disks=($(create_image_files 2 1))  # Create 2 disks starting at index 1
             spare=$(create_image_files 1 3)    # Create 1 spare starting at index 3
-            create_pool "mirror" "myzfspool_mirror" "${disks[*]}" "$spare"
+            create_pool "mirror" "zfsmini_mi" "${disks[*]}" "$spare"
             sleep 2
             ;;
         2)
