@@ -1,7 +1,7 @@
 #!/bin/bash
 # License: MIT
 # Copyright (c) 2024 Salih Emin - SynergOps
-# Origin: https://github.com/synergops/zfsminilab
+# Origin: https://github.com/synergops/zfs-mini-lab.git
 
 # Check if ZFS is installed
 if ! command -v zfs &> /dev/null || ! command -v zpool &> /dev/null; then
