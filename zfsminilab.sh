@@ -104,6 +104,7 @@ destroy_and_cleanup() {
     cleanup_devices
     printf "Cleanup completed.\n"
     sleep 2
+    echo ""
 }
 
 # Main menu function
@@ -111,13 +112,18 @@ main_menu() {
     # Update existing_pool at the start of each menu display
     existing_pool=$(sudo zpool list -H -o name 2>/dev/null | grep -E "zfsmini_mi|zfsmini_RAIDZ" | head -n1)
     printf "########################################################\n"
-    printf "Welcome to the ZFS Playground!\n"
+    printf "Welcome to the ZFS Mini Lab Playground!       v24.09.19\n"
     printf "########################################################\n"
+    echo ""
     printf "Select an option:\n"
     printf "1) Create a mirror with 2 disk image files and 1 spare\n"
     printf "2) Create a RAIDZ with 3 disk image files and 1 spare\n"
     printf "3) Destroy and clean up (Current lab pool: %s)\n" "$existing_pool"
     printf "4) Exit\n"
+    echo ""
+    printf "________________________________________________________\n"
+    printf "    Once you make your pool, you can exit or use another\n"
+    printf "    terminal and practice your skills with zfs commands.\n"
     printf "########################################################\n"
     read -rp "Enter your choice: " choice
     case $choice in
@@ -148,8 +154,13 @@ main_menu() {
             fi
             ;;
         4)
-            echo "Exiting."
+            echo ""
+            echo "Thank you for using ZFS Mini Lab Playground!"
+            echo "If you find this tool helpful, consider supporting it."
+            echo "Donations are welcome at: "
+            echo "          https://www.paypal.me/cerebrux"
             sleep 2
+            echo "Exiting."
             exit 0
             ;;
         *)
