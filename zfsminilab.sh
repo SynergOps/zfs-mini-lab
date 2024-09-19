@@ -54,11 +54,11 @@ create_pool() {
     # Check if either ZFS pool already exists
     if sudo zpool list | grep -qE "zfsmini_MIRROR|zfsmini_RAIDZ"; then
         existing_pool=$(sudo zpool list -H -o name 2>/dev/null | grep -E "zfsmini_MIRROR|zfsmini_RAIDZ" | head -n1)
-        printf "________________________________________________________________\n"
+        printf "_________________________________________________________________________\n"
         printf "Error: A ZFS pool (%s) already exists.\n" "$existing_pool"
         printf "Please destroy the %s pool before creating a new one.\n" "$existing_pool"
         printf "You can use option 3 from the main menu to destroy and clean up.\n"
-        printf "________________________________________________________________\n"
+        printf "_________________________________________________________________________\n"
         sleep 2
         return 1
     fi
