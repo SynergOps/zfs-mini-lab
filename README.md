@@ -4,11 +4,13 @@
     <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SATQ6Y9S3UCSG" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-yellow.svg" alt="Donate to project"></a>
 </p>
 
+_Fun fact: This script was born when I was knee-deep in writing a Greek tutorial called ["ZFS: Don't try it, you might fall in love"](https://cerebrux.net/2024/09/19/zfs-%ce%bc%ce%b7%ce%bd-%cf%84%ce%bf-%ce%b4%ce%bf%ce%ba%ce%b9%ce%bc%ce%ac%cf%83%ce%b5%ce%b9%cf%82-%ce%b3%ce%b9%ce%b1%cf%84%ce%af-%ce%b8%ce%b1-%cf%83%ce%bf%cf%85-%ce%b1%cf%81%ce%ad%cf%83%ce%b5%ce%b9/). Tired of playing pool boy with ZFS, manually creating and destroying test pools, I decided to let this script do the heavy lifting. Who says laziness isn't the mother of invention?_
+
 A bash script for creating and managing mini ZFS pools (mirror or raidz) for learning and experimentation.
 
 ![zfsminilab](https://github.com/user-attachments/assets/750d80ad-57e8-489f-9c61-955cd774e20e)
 
-_Note: This simple script was born out of lazyness when I was writing a tutorial in Greek titled: ["ZFS: Μην το δοκιμάσεις γιατί θα σου αρέσει"](https://cerebrux.net/2024/09/19/zfs-%ce%bc%ce%b7%ce%bd-%cf%84%ce%bf-%ce%b4%ce%bf%ce%ba%ce%b9%ce%bc%ce%ac%cf%83%ce%b5%ce%b9%cf%82-%ce%b3%ce%b9%ce%b1%cf%84%ce%af-%ce%b8%ce%b1-%cf%83%ce%bf%cf%85-%ce%b1%cf%81%ce%ad%cf%83%ce%b5%ce%b9/). I didn't want to manually create and destroy the testing zfs pools, so I wrote this script_
+_Note: This simple script was born out of laziness when I was writing a tutorial in Greek titled: ["ZFS: Μην το δοκιμάσεις γιατί θα σου αρέσει"](https://cerebrux.net/2024/09/19/zfs-%ce%bc%ce%b7%ce%bd-%cf%84%ce%bf-%ce%b4%ce%bf%ce%ba%ce%b9%ce%bc%ce%ac%cf%83%ce%b5%ce%b9%cf%82-%ce%b3%ce%b9%ce%b1%cf%84%ce%af-%ce%b8%ce%b1-%cf%83%ce%bf%cf%85-%ce%b1%cf%81%ce%ad%cf%83%ce%b5%ce%b9/). I didn't want to manually create and destroy the testing zfs pools, so I wrote this script_
 
 ## Features
 
