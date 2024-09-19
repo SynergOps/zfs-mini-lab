@@ -110,17 +110,16 @@ destroy_and_cleanup() {
 # Main menu function
 main_menu() {
     # Update existing_pool at the start of each menu display
-    existing_pool=$(sudo zpool list -H -o name 2>/dev/null | grep -E "zfsmini_mi|zfsmini_RAIDZ" | head -n1)
+    existing_pool=$(sudo zpool list -H -o name 2>/dev/null | grep -E "zfsmini_MIRROR|zfsmini_RAIDZ" | head -n1)
+    
     printf "########################################################\n"
     printf "Welcome to the ZFS Mini Lab Playground!       v24.09.19\n"
     printf "########################################################\n"
-    echo ""
     printf "Select an option:\n"
     printf "1) Create a mirror with 2 disk image files and 1 spare\n"
     printf "2) Create a RAIDZ with 3 disk image files and 1 spare\n"
-    printf "3) Destroy and clean up (Current lab pool: %s)\n" "$existing_pool"
+    printf "3) Destroy and clean up (Current lab pool: %s)\n" "${existing_pool:-None}"
     printf "4) Exit\n"
-    echo ""
     printf "________________________________________________________\n"
     printf "    Once you make your pool, you can exit or use another\n"
     printf "    terminal and practice your skills with zfs commands.\n"
