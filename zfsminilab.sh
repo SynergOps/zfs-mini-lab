@@ -52,8 +52,8 @@ create_pool() {
     local disks=($3)
     local spare_disk=$4
     # Check if either ZFS pool already exists
-    if sudo zpool list | grep -qE "zfsmini_mirror|zfsmini_RAIDZ"; then
-        existing_pool=$(sudo zpool list -H -o name 2>/dev/null | grep -E "zfsmini_mirror|zfsmini_RAIDZ" | head -n1)
+    if sudo zpool list | grep -qE "zfsmini_MIRROR|zfsmini_RAIDZ"; then
+        existing_pool=$(sudo zpool list -H -o name 2>/dev/null | grep -E "zfsmini_MIRROR|zfsmini_RAIDZ" | head -n1)
         printf "________________________________________________________________\n"
         printf "Error: A ZFS pool (%s) already exists.\n" "$existing_pool"
         printf "Please destroy the %s pool before creating a new one.\n" "$existing_pool"
