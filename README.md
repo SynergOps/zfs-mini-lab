@@ -48,7 +48,7 @@ A bash script for creating and managing mini ZFS pools (mirror or raidz) for lea
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/synergops/zfs-mini-lab/blob/main/LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/SynergOps/zfs-mini-lab/blob/master/LICENSE) file for details.
 
 ## Acknowledgments
 
