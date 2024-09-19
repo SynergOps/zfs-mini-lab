@@ -131,7 +131,7 @@ main_menu() {
             # Clean up previous devices, then create mirror with spare
             disks=($(create_image_files 2 1))  # Create 2 disks starting at index 1
             spare=$(create_image_files 1 3)    # Create 1 spare starting at index 3
-            create_pool "mirror" "zfsmini_mi" "${disks[*]}" "$spare"
+            create_pool "mirror" "zfsmini_MIRROR" "${disks[*]}" "$spare"
             sleep 2
             ;;
         2)
