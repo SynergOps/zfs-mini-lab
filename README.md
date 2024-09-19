@@ -1,5 +1,9 @@
 # ZFS Mini Lab Playground
 
+<p align="center">
+    <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SATQ6Y9S3UCSG" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-yellow.svg" alt="Donate to project"></a>
+</p>
+
 A bash script for creating and managing mini ZFS pools for learning and experimentation.
 
 ## Features
@@ -23,6 +27,7 @@ A bash script for creating and managing mini ZFS pools for learning and experime
 
 2. Make the script executable:
    ```
+   cd zfs-mini-lab
    chmod +x zfsminilab.sh
    ```
 
@@ -41,7 +46,7 @@ A bash script for creating and managing mini ZFS pools for learning and experime
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/synergops/zfs-mini-lab/blob/main/LICENSE) file for details.
 
 ## Acknowledgments
 
