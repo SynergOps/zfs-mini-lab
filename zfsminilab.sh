@@ -47,6 +47,13 @@ create_pool() {
     local pool_name=$2
     local disks=($3)
     local spare_disk=$4
+    # Check if either ZFS pool already exists
+    if sudo zpool list | grep -qE "myzfspool_mirror|myzfspool_raidz"; then
+        echo "Error: A ZFS pool (myzfspool_mirror or myzfspool_raidz) already exists."
+        echo "Please destroy the existing pool before creating a new one."
+        echo "You can use option 3 from the main menu to destroy and clean up."
+        return 1
+    fi
 
     # Create ZFS pool with the selected configuration
     echo "Creating ZFS pool with devices: ${disks[*]}, spare: $spare_disk"
@@ -92,33 +99,42 @@ destroy_and_cleanup() {
 
 # Main menu function
 main_menu() {
+    # Update existing_pool at the start of each menu display
+    existing_pool=$(sudo zpool list -H -o name 2>/dev/null | grep -E "myzfspool_mirror|myzfspool_raidz" | head -n1)
+    echo "########################################################"
     echo "Welcome to the ZFS Playground!"
+    echo "########################################################"
     echo "Select an option:"
     echo "1) Create a mirror with 2 disk image files and 1 spare"
     echo "2) Create a RAIDZ with 3 disk image files and 1 spare"
-    echo "3) Destroy and clean up"
+    echo "3) Destroy and clean up (Current lab pool: $existing_pool)"
     echo "4) Exit"
-
+    echo "########################################################"
     read -rp "Enter your choice: " choice
     case $choice in
         1)
             # Clean up previous devices, then create mirror with spare
-            cleanup_devices
             disks=($(create_image_files 2 1))  # Create 2 disks starting at index 1
             spare=$(create_image_files 1 3)    # Create 1 spare starting at index 3
             create_pool "mirror" "myzfspool_mirror" "${disks[*]}" "$spare"
             ;;
         2)
             # Clean up previous devices, then create RAIDZ with spare
-            cleanup_devices
             disks=($(create_image_files 3 1))  # Create 3 disks starting at index 1
             spare=$(create_image_files 1 4)    # Create 1 spare starting at index 4
             create_pool "raidz" "myzfspool_raidz" "${disks[*]}" "$spare"
             ;;
         3)
-            # Destroy and clean up
-            read -rp "Enter the name of the pool to destroy (myzfspool_mirror or myzfspool_raidz): " pool_name
-            destroy_and_cleanup "$pool_name"
+            if [ -z "$existing_pool" ]; then
+                echo "No existing pool found."
+            else
+                read -rp "Are you sure you want to destroy the pool '$existing_pool' and all its data? (yes/no): " confirm
+                if [[ $confirm == [Yy]* ]]; then
+                    destroy_and_cleanup "$existing_pool"
+                else
+                    echo "Pool destruction cancelled."
+                fi
+            fi
             ;;
         4)
             echo "Exiting."
