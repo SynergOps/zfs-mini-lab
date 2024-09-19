@@ -4,7 +4,9 @@
     <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=SATQ6Y9S3UCSG" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-yellow.svg" alt="Donate to project"></a>
 </p>
 
-A bash script for creating and managing mini ZFS pools for learning and experimentation.
+A bash script for creating and managing mini ZFS pools (mirror or raidz) for learning and experimentation.
+
+![zfsminilab](https://github.com/user-attachments/assets/750d80ad-57e8-489f-9c61-955cd774e20e)
 
 ## Features
 
